@@ -11,12 +11,16 @@ class MagiclinkMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        $token = (string) $request->route('token');
+        $token = (string)$request->route('token');
 
         $magicLink = MagicLink::getValidMagicLinkByToken($token);
 
-        if (! $magicLink) {
+        if (!$magicLink) {
             return $this->badResponse();
+        }
+        $confirmationRequired = $magicLink->confirmationRequired();
+        if ($confirmationRequired) {
+            
         }
 
         $responseAccessCode = $magicLink->getResponseAccessCode();

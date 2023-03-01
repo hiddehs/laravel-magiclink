@@ -23,11 +23,16 @@ use MagicLink\Events\MagicLinkWasVisited;
  */
 class MagicLink extends Model
 {
-    use AccessCode;
+    use AccessCode, ConfirmationRequired;
 
     public function getAccessCode()
     {
         return $this->access_code ?? null;
+    }
+
+    public function confirmationRequired()
+    {
+        return $this->confirmation_required ?? false;
     }
 
     public function getMagikLinkId()
@@ -67,8 +72,8 @@ class MagicLink extends Model
     public function setActionAttribute($value)
     {
         $this->attributes['action'] = $this->getConnection()->getDriverName() === 'pgsql'
-                                        ? base64_encode(serialize($value))
-                                        : serialize($value);
+            ? base64_encode(serialize($value))
+            : serialize($value);
     }
 
     public function getUrlAttribute()
@@ -94,8 +99,8 @@ class MagicLink extends Model
 
         $magiclink->token = Str::random(static::getTokenLength());
         $magiclink->available_at = $lifetime
-                                    ? Carbon::now()->addMinutes($lifetime)
-                                    : null;
+            ? Carbon::now()->addMinutes($lifetime)
+            : null;
         $magiclink->max_visits = $numMaxVisits;
         $magiclink->action = $action;
 
@@ -151,7 +156,7 @@ class MagicLink extends Model
     /**
      * Get valid MagicLink by token.
      *
-     * @param  string  $token
+     * @param string $token
      * @return \MagicLink\MagicLink|null
      */
     public static function getValidMagicLinkByToken($token)
@@ -163,24 +168,24 @@ class MagicLink extends Model
         }
 
         return static::where('id', $tokenId)
-                    ->where('token', $tokenSecret)
-                    ->where(function ($query) {
-                        $query
-                            ->whereNull('available_at')
-                            ->orWhere('available_at', '>=', Carbon::now());
-                    })
-                    ->where(function ($query) {
-                        $query
-                            ->whereNull('max_visits')
-                            ->orWhereRaw('max_visits > num_visits');
-                    })
-                    ->first();
+            ->where('token', $tokenSecret)
+            ->where(function ($query) {
+                $query
+                    ->whereNull('available_at')
+                    ->orWhere('available_at', '>=', Carbon::now());
+            })
+            ->where(function ($query) {
+                $query
+                    ->whereNull('max_visits')
+                    ->orWhereRaw('max_visits > num_visits');
+            })
+            ->first();
     }
 
     /**
      * Get MagicLink by token.
      *
-     * @param  string  $token
+     * @param string $token
      * @return \MagicLink\MagicLink|null
      */
     public static function getMagicLinkByToken($token)
@@ -192,8 +197,8 @@ class MagicLink extends Model
         }
 
         return static::where('id', $tokenId)
-                    ->where('token', $tokenSecret)
-                    ->first();
+            ->where('token', $tokenSecret)
+            ->first();
     }
 
     /**
@@ -212,7 +217,7 @@ class MagicLink extends Model
                         ->whereRaw('max_visits <= num_visits');
                 });
         })
-        ->delete();
+            ->delete();
     }
 
     /**
