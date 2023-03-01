@@ -126,6 +126,17 @@ class MagicLink extends Model
 
         return $this;
     }
+    /**
+     * Protect the Action with an confirmation which will prevent email clients to visit the link.
+     */
+    public function protectWithConfirmation(): self
+    {
+        $this->confirmation_required = true;
+
+        $this->save();
+
+        return $this;
+    }
 
     /**
      * Execute Action.

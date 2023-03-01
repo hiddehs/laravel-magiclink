@@ -2,7 +2,7 @@
 
 return [
 
-    'token'           => [
+    'token' => [
         /*
         |--------------------------------------------------------------------------
         | Token size
@@ -64,4 +64,17 @@ return [
     */
     'disable_default_route' => false,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Configure Captcha key for auto confirm
+    |--------------------------------------------------------------------------
+    |
+    | When using ConfirmationRequired the confirmation page must make sure that
+    | the link is not accessed by an emailclient / linkpreview visitor.
+    | Configure your hcaptcha.com key to verify a human accessing the link.
+    |
+    */
+    'confirmation' => [
+        'hcaptcha_sitekey' => null
+    ]
 ];

@@ -18,9 +18,11 @@ class MagiclinkMiddleware
         if (!$magicLink) {
             return $this->badResponse();
         }
-        $confirmationRequired = $magicLink->confirmationRequired();
+
+        $confirmationRequired = $magicLink->getResponseConfirmationRequired();
+        
         if ($confirmationRequired) {
-            
+            return $confirmationRequired;
         }
 
         $responseAccessCode = $magicLink->getResponseAccessCode();
