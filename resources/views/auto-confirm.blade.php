@@ -28,7 +28,6 @@
         <input type="hidden" value="true" name="auto-confirm">
         <div class="h-captcha"
              data-callback="onSubmit"
-             data-size="invisible"
              data-sitekey="{{config('magiclink.confirmation.hcaptcha_sitekey')}}"></div>
     </form>
 </div>
