@@ -75,6 +75,7 @@ return [
     |
     */
     'confirmation' => [
+        'fallback_copy' => "To continue following this link, please confirm you're a human by completing the captcha below:",
         'hcaptcha_sitekey' => null
     ]
 ];

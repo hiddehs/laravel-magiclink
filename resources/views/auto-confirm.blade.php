@@ -10,6 +10,11 @@
             top: 50%;
             transform: translate(-50%, -50%);
         }
+
+        body {
+            font-family: Helvetica, Arial;
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -18,11 +23,14 @@
     function onSubmit(token) {
         document.getElementsByTagName("form")[0].submit()
     }
+
     window.onload = function () {
         hcaptcha.execute();
     }
 </script>
 <div class="wrapper">
+    <p>{{config("magiclink.confirmation.fallback_copy")}}</p>
+    <br>
     <form method="get">
         {{ csrf_field() }}
         <input type="hidden" value="true" name="auto-confirm">
